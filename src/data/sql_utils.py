@@ -2,6 +2,13 @@ import psycopg2
 import pandas as pd
 import os
 
+from src.data import local
+
+PORT = local.port
+USER = local.user
+HOST = local.host
+PASSWORD = local.password
+
 DBNAME = "opportunity_youth"
 
 def create_database_and_tables():
@@ -19,7 +26,7 @@ def create_database():
     """
     # Depending on your local settings, you may need to specify a user and password, e.g.
     # conn = psycopg2.connect(dbname="postgres", user="postgres", password="password")
-    conn = psycopg2.connect(dbname="postgres")
+    conn = psycopg2.connect(dbname='postgres', port=PORT, user=USER, host=HOST, password=PASSWORD)
     conn.autocommit = True  # it seems this mode is needed to make a db
     conn.set_isolation_level(0)  # also this for dropping db
 
@@ -39,7 +46,7 @@ def create_tables():
     """
     # Depending on your local settings, you may need to specify a user and password, e.g.
     # conn = psycopg2.connect(dbname=DBNAME, user="postgres", password="password")
-    conn = psycopg2.connect(dbname=DBNAME)
+    conn = psycopg2.connect(dbname=DBNAME, port=PORT, user=USER, host=HOST, password=PASSWORD)
 
     create_pums_2017_table(conn)
     create_puma_names_2010_table(conn)
@@ -91,7 +98,7 @@ def copy_csv_files(data_files_dict):
     """
     # Depending on your local settings, you may need to specify a user and password, e.g.
     # conn = psycopg2.connect(dbname=DBNAME, user="postgres", password="password")
-    conn = psycopg2.connect(dbname=DBNAME)
+    conn = psycopg2.connect(dbname=DBNAME, port=PORT, user=USER, host=HOST, password=PASSWORD)
 
     for name, files in data_files_dict.items():
         csv_file = files[0]
