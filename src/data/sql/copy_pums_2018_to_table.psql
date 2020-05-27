@@ -1,0 +1,2 @@
+-- Copy the csv contents of the 2018 5-year persons data into the table
+COPY pums_2018 FROM STDIN WITH (FORMAT CSV);
