@@ -25,6 +25,9 @@ def collect_all_data_files():
     database tables
     """
     data_files_dict = {
+        "pums_2014": collect_pums_2014_data(),
+        "pums_2015": collect_pums_2015_data(),
+        "pums_2016": collect_pums_2016_data(),
         "pums_2018": collect_pums_2018_data()
     }
     return data_files_dict
@@ -44,6 +47,33 @@ def load_into_sql(data_files_dict):
         csv_file.close()
         if other_file:
             other_file.close()
+
+
+def collect_pums_2014_data():
+    """
+    Download the 2014 5-year ACS PUMS person-level records for the state of WA
+    """
+    PUMS_2014_URL = "https://www2.census.gov/programs-surveys/acs/data/pums/2014/5-Year/csv_pwa.zip"
+    PUMS_2014_CSV_NAME = "ss14pwa.csv"
+    return collect_zipfile_data(PUMS_2014_URL, PUMS_2014_CSV_NAME)
+
+
+def collect_pums_2015_data():
+    """
+    Download the 2015 5-year ACS PUMS person-level records for the state of WA
+    """
+    PUMS_2015_URL = "https://www2.census.gov/programs-surveys/acs/data/pums/2015/5-Year/csv_pwa.zip"
+    PUMS_2015_CSV_NAME = "ss15pwa.csv"
+    return collect_zipfile_data(PUMS_2015_URL, PUMS_2015_CSV_NAME)
+
+
+def collect_pums_2016_data():
+    """
+    Download the 2016 5-year ACS PUMS person-level records for the state of WA
+    """
+    PUMS_2016_URL = "https://www2.census.gov/programs-surveys/acs/data/pums/2016/5-Year/csv_pwa.zip"
+    PUMS_2016_CSV_NAME = "ss16pwa.csv"
+    return collect_zipfile_data(PUMS_2016_URL, PUMS_2016_CSV_NAME)
 
 
 def collect_pums_2018_data():

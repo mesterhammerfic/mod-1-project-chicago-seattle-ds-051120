@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS pums_2018;
+DROP TABLE IF EXISTS pums_2014;
 
--- Create a table for the 2018 5-year persons PUMS data
-CREATE TABLE pums_2018
+-- Create a table for the 2014 5-year persons PUMS data
+CREATE TABLE pums_2014
 (
     RT CHAR(1),
     SERIALNO CHAR(13),
