@@ -12,36 +12,28 @@ The purpose of this project is to provide an update on the demographics of Oppor
 * Data Visualization
 
 ### Technologies
-* Python
-* PostgreSQL
-* Pandas
-* Jupyter, Conda
-* Pandas, Matplotlib, psycopg2
+* Languages: Python, SQL
+* Database management: PostgreSQL
+* Workflow tools: Jupyter, Conda
+* Python packages: Pandas, Matplotlib, psycopg2
 
 
 ## Project Description
-(Provide more detailed overview of the project.  Talk a bit about your data sources and what questions and hypothesis you are exploring. What specific data analysis/visualization and modelling work are you using to solve the problem? What blockers and challenges are you facing?  Feel free to number or bullet point things here)
+This project aims to provide an understanding of Opportunity Youth (OY) are in South King County, Washington, including which areas have the highest amount of OY, what possible factors affect the amount of OY in a given area, whether OY is increasing or decreasing and where these trends are occurring. We pull data from [Public Use Microdata Sample (PUMS)](https://www.census.gov/programs-surveys/acs/technical-documentation/pums/about.html) 5 year data files for 2014, 2017, and 2018. Our goal is to show where public assistance programs will be most effective, both in regards to OY demographics and the geographical regions in which those OY reside.
 
 ## Needs of this project
 
-- frontend developers
-- data exploration/descriptive statistics
-- data processing/cleaning
-- statistical modeling
-- writeup/reporting
-- etc. (be as specific as possible)
+- Data exploration/descriptive statistics
+- Data processing/cleaning
+- Statistical modeling
+- Data collection (We would like to add 2016 and 2017 PUMS data)
 
 ## Getting Started
 
 1. Clone this repo (for help see this [tutorial](https://help.github.com/articles/cloning-a-repository/)).
-2. Raw Data is being kept [here](Repo folder containing raw data) within this repo.
-
-    *If using offline data mention that and how they may obtain the data from the froup)*
+2. Raw Data can be downloaded with the first notebook in the notebooks/exploratory folder to download all of the files. This notebook utilizes the scripts in the src/data folder of this repository.
     
-3. Data processing/transformation scripts are being kept [here](Repo folder containing data processing scripts/notebooks)
-4. etc...
-
-*If your project is well underway and setup is fairly complicated (ie. requires installation of many packages) create another "setup.md" file and link to it here*  
+3. Any scripts used for data processing will be stored in the src folder, and any notebooks detailing exploratory work will be found in the notebooks/exploratory folder.
 
 5. Follow setup [instructions](Link to file)
 
@@ -53,16 +45,10 @@ The purpose of this project is to provide an update on the demographics of Oppor
 
 ## Contributing DSWG Members
 
-**Team Leads (Contacts) : [Full Name](https://github.com/[github handle])(@slackHandle)**
+- [Amanda Potter](https://github.com/aspotter99)
+- [Karim Oliver](https://github.com/KarimOliver)
+- [Maximilian Esterhammer-Fic](https://github.com/mesterhammerfic)
 
-#### Other Members:
-
-|Name     |  Slack Handle   | 
-|---------|-----------------|
-|[Full Name](https://github.com/[github handle])| @johnDoe        |
-|[Full Name](https://github.com/[github handle]) |     @janeDoe    |
 
 ## Contact
-* If you haven't joined the SF Brigade Slack, [you can do that here](http://c4sf.me/slack).  
-* Our slack channel is `#datasci-projectname`
 * Feel free to contact team leads with any questions or if you are interested in contributing!
