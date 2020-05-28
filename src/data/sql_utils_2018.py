@@ -23,33 +23,33 @@ def create_tables():
     conn = psycopg2.connect(dbname=DBNAME, user=USER, password=PASSWORD, port=PORT, host=HOST)
 #     conn = psycopg2.connect(dbname=DBNAME)
 
-    create_pums_2014_table(conn)
-    create_pums_2015_table(conn)
-    create_pums_2016_table(conn)
+#     create_pums_2014_table(conn)
+#     create_pums_2015_table(conn)
+#     create_pums_2016_table(conn)
     create_pums_2018_table(conn)
     
     conn.close()
 
 
-def create_pums_2014_table(conn):
-    """
-    Create a table for the 2014 5-year persons PUMS data
-    """
-    execute_sql_script(conn, "create_pums_2014_table.sql")
+# def create_pums_2014_table(conn):
+#     """
+#     Create a table for the 2014 5-year persons PUMS data
+#     """
+#     execute_sql_script(conn, "create_pums_2014_table.sql")
     
     
-def create_pums_2015_table(conn):
-    """
-    Create a table for the 2015 5-year persons PUMS data
-    """
-    execute_sql_script(conn, "create_pums_2015_table.sql")
+# def create_pums_2015_table(conn):
+#     """
+#     Create a table for the 2015 5-year persons PUMS data
+#     """
+#     execute_sql_script(conn, "create_pums_2015_table.sql")
 
     
-def create_pums_2016_table(conn):
-    """
-    Create a table for the 2016 5-year persons PUMS data
-    """
-    execute_sql_script(conn, "create_pums_2016_table.sql")
+# def create_pums_2016_table(conn):
+#     """
+#     Create a table for the 2016 5-year persons PUMS data
+#     """
+#     execute_sql_script(conn, "create_pums_2016_table.sql")
     
     
 def create_pums_2018_table(conn):
@@ -72,13 +72,13 @@ def copy_csv_files(data_files_dict):
         csv_file = files[0]
         # skip the header; this info is already in the table schema
         next(csv_file)
-        if name == "pums_2014":
-            copy_csv_to_pums_2014_table(conn, csv_file)
-        elif name == "pums_2015":
-            copy_csv_to_pums_2015_table(conn, csv_file)
-        elif name == "pums_2016":
-            copy_csv_to_pums_2016_table(conn, csv_file)
-        elif name == "pums_2018":
+#         if name == "pums_2014":
+#             copy_csv_to_pums_2014_table(conn, csv_file)
+#         elif name == "pums_2015":
+#             copy_csv_to_pums_2015_table(conn, csv_file)
+#         elif name == "pums_2016":
+#             copy_csv_to_pums_2016_table(conn, csv_file)
+        if name == "pums_2018":
             copy_csv_to_pums_2018_table(conn, csv_file)
         print(f"""Successfully loaded CSV file into `{name}` table
         """)
