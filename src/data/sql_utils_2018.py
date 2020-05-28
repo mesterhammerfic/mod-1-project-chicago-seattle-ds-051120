@@ -5,11 +5,11 @@ import os
 DBNAME = "opportunity_youth"
 
 #Retrieving postgres info for MEF
-from src.data import local
-PORT = local.port
-USER = local.user
-HOST = local.host
-PASSWORD = local.password
+# from src.data import local
+# PORT = local.port
+# USER = local.user
+# HOST = local.host
+# PASSWORD = local.password
 
 
 def create_tables():
@@ -20,10 +20,10 @@ def create_tables():
     """
     # Depending on your local settings, you may need to specify a user and password, e.g.
     # conn = psycopg2.connect(dbname=DBNAME, user="postgres", password="password")
-    conn = psycopg2.connect(dbname=DBNAME, user=USER, password=PASSWORD, port=PORT, host=HOST)
-#     conn = psycopg2.connect(dbname=DBNAME)
+#     conn = psycopg2.connect(dbname=DBNAME, user=USER, password=PASSWORD, port=PORT, host=HOST)
+    conn = psycopg2.connect(dbname=DBNAME)
 
-#     create_pums_2014_table(conn)
+    create_pums_2014_table(conn)
 #     create_pums_2015_table(conn)
 #     create_pums_2016_table(conn)
     create_pums_2018_table(conn)
@@ -31,11 +31,11 @@ def create_tables():
     conn.close()
 
 
-# def create_pums_2014_table(conn):
-#     """
-#     Create a table for the 2014 5-year persons PUMS data
-#     """
-#     execute_sql_script(conn, "create_pums_2014_table.sql")
+def create_pums_2014_table(conn):
+    """
+    Create a table for the 2014 5-year persons PUMS data
+    """
+    execute_sql_script(conn, "create_pums_2014_table.sql")
     
     
 # def create_pums_2015_table(conn):
@@ -65,15 +65,15 @@ def copy_csv_files(data_files_dict):
     """
     # Depending on your local settings, you may need to specify a user and password, e.g.
     # conn = psycopg2.connect(dbname=DBNAME, user="postgres", password="password")
-    conn = psycopg2.connect(dbname=DBNAME, user=USER, password=PASSWORD, port=PORT, host=HOST)
-#     conn = psycopg2.connect(dbname=DBNAME)
+#     conn = psycopg2.connect(dbname=DBNAME, user=USER, password=PASSWORD, port=PORT, host=HOST)
+    conn = psycopg2.connect(dbname=DBNAME)
 
     for name, files in data_files_dict.items():
         csv_file = files[0]
         # skip the header; this info is already in the table schema
         next(csv_file)
-#         if name == "pums_2014":
-#             copy_csv_to_pums_2014_table(conn, csv_file)
+        if name == "pums_2014":
+            copy_csv_to_pums_2014_table(conn, csv_file)
 #         elif name == "pums_2015":
 #             copy_csv_to_pums_2015_table(conn, csv_file)
 #         elif name == "pums_2016":
@@ -93,19 +93,19 @@ def copy_csv_to_pums_2014_table(conn, csv_file):
     COPY_PUMS_2014 = "copy_pums_2014_to_table.psql"
     copy_expert_psql_script(conn, COPY_PUMS_2014, csv_file)
     
-def copy_csv_to_pums_2015_table(conn, csv_file):
-    """
-    Copy the CSV contents of the 2015 5-year persons data into the table
-    """
-    COPY_PUMS_2015 = "copy_pums_2015_to_table.psql"
-    copy_expert_psql_script(conn, COPY_PUMS_2015, csv_file)
+# def copy_csv_to_pums_2015_table(conn, csv_file):
+#     """
+#     Copy the CSV contents of the 2015 5-year persons data into the table
+#     """
+#     COPY_PUMS_2015 = "copy_pums_2015_to_table.psql"
+#     copy_expert_psql_script(conn, COPY_PUMS_2015, csv_file)
     
-def copy_csv_to_pums_2016_table(conn, csv_file):
-    """
-    Copy the CSV contents of the 2016 5-year persons data into the table
-    """
-    COPY_PUMS_2016 = "copy_pums_2016_to_table.psql"
-    copy_expert_psql_script(conn, COPY_PUMS_2016, csv_file)
+# def copy_csv_to_pums_2016_table(conn, csv_file):
+#     """
+#     Copy the CSV contents of the 2016 5-year persons data into the table
+#     """
+#     COPY_PUMS_2016 = "copy_pums_2016_to_table.psql"
+#     copy_expert_psql_script(conn, COPY_PUMS_2016, csv_file)
     
 def copy_csv_to_pums_2018_table(conn, csv_file):
     """
