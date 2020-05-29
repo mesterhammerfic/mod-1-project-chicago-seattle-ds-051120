@@ -3,18 +3,19 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.ticker import MaxNLocator
+import numpy as np
 
 
-def compare_across_years(column_and_value, df_1, df_2, df_3):
+def compare_across_years(variable_and_status, df_1, df_2, df_3):
     """ 
-    takes a tuple, column_and_value, that is compsed of the column name you want to check 
+    takes a tuple, variable_and_status, that is compsed of the column name you want to check 
     and the value which you want to check for in that column. df_1, 2, and 3 are the dataframes which you want to compare.
     All three dataframes must use the same layout ie they should have all the same columns and values,
     just with different rows. 
     All dataframes MUST contain a 'weight' column for accurate calculations. (See pwgtp in the PUMS data dictionary)
     """
-    variable = column_and_value[0]
-    status = column_and_value[1]
+    variable = variable_and_status[0]
+    status = variable_and_status[1]
     #takes the column name from the zeroth index of the tuple and takes the value from the first
     
     total_1 = df_1.weight.sum() 
@@ -42,9 +43,9 @@ def get_oy(df):
                        (df['school']=='Has not attended in last 3 months')]
     return oy
 
-def line_across_years(column_and_value, df_1, df_2, df_3):
+def line_across_years(variable_and_status, df_1, df_2, df_3):
     """ 
-    takes a tuple, column_and_value, that is compsed of the column name you want to check 
+    takes a tuple, variable_and_status, that is compsed of the column name you want to check 
     and the value which you want to check for in that column. df_1, 2, and 3 are the dataframes which you want to compare.
     All three dataframes must use the same layout ie they should have all the same columns and values,
     just with different rows. 
@@ -59,27 +60,27 @@ def line_across_years(column_and_value, df_1, df_2, df_3):
     
     x_var = [2014, 2017, 2018]
     
-    y_var_oy = compare_across_years(column_and_value, OY_df_1, OY_df_2, OY_df_3)
+    y_var_oy = compare_across_years(variable_and_status, OY_df_1, OY_df_2, OY_df_3)
 
-    y_var_total = compare_across_years(column_and_value, df_1, df_2, df_3)
+    y_var_total = compare_across_years(variable_and_status, df_1, df_2, df_3)
     
     
     fig, ax = plt.subplots(1,1, figsize=(10,5))
 
-    ax.set_title(f'Rate of {column_and_value[0]}: {column_and_value[1]} in Opportunity Youth Compared to Total Youth')
+    ax.set_title(f'Rate of {variable_and_status[0]}: {variable_and_status[1]} in Opportunity Youth Compared to Total Youth')
     ax.set_ylabel('Percent of Sample')
 
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     ax.plot(x_var, y_var_total, marker='o', color='g', label='Total Youth')
     ax.plot(x_var, y_var_oy, marker='o', color='b', label='Opportunity Youth')
     ax.legend()
-#     fig.savefig(column_and_value[0]+'.png')
+#     fig.savefig(variable_and_status[0]+'.png')
 
-def compare(column_and_value, df_1, df_2):
-    #takes a tuple, column_and_value, that is compsed of the variable column you want to check 
+def compare(variable_and_status, df_1, df_2):
+    #takes a tuple, variable_and_status, that is compsed of the variable column you want to check 
     #and the status which you want to compare. Also takes the data frame you want to look at.
-    variable = column_and_value[0]
-    status = column_and_value[1]
+    variable = variable_and_status[0]
+    status = variable_and_status[1]
     
     total_1 = df_1.weight.sum()
     var_total_1 = df_1[df_1[variable] == status].weight.sum()
@@ -91,18 +92,49 @@ def compare(column_and_value, df_1, df_2):
     
     return (prct_1, prct_2)
 
-def create_graph(column_and_value, df_1, df_2, col_names=['1','2'], title='title'):
-    prct_tuple = compare(column_and_value, df_1, df_2)
-
+def create_graph(variable_and_status, df_1, df_2, col_names=['1','2'], title='title'):
+    prct_tuple = compare(variable_and_status, df_1, df_2)
+    y_var = np.array(prct_tuple)*100
     height_values = prct_tuple
 
-    fig, ax1 = plt.subplots(1,1, figsize=(8,8))
-    ax1.set_title(title, fontsize=14)
-    
-    ax1.set_ylabel('Percent of Sample')
+    fig, ax1 = plt.subplots(1,1, figsize=(5,5))
+    ax1.set_title(title, fontsize=16)
+#     ax1.set_ylim(0,100) #Uncomment to scale axis to 100
+    ax1.set_ylabel('Percent of Population', fontsize=14)
+    ax1.set_xlabel('Populations', fontsize=14)
     sns.barplot(x=col_names, y=height_values, palette="deep", ax=ax1)
 #     ax1.bar(x=col_names, height=height_values)
-#    fig.savefig(column_and_value[0]+'.png')
+#    fig.savefig(variable_and_status[0]+'.png')
+
+def create_graph_matrix(variable_and_status_list, df_1, df_2, col_names=['1','2'], title_list=[], dim=(3,4)):
+    if title_list == []:
+        title = [variable_and_status[0]+': '+variable_and_status[1] 
+                 for variable_and_status 
+                 in variable_and_status_list]
+    ctr = 0
+    
+    fig, ax = plt.subplots(dim[0],dim[1], figsize=(70,70))
+    for row in range(dim[0]):
+        if ctr >= len(variable_and_status_list):
+            break
+        else:
+            for col in range(dim[1]):
+                if ctr >= len(variable_and_status_list):
+                    break
+                else:
+                    variable_and_status=variable_and_status_list[ctr]
+                    prct_tuple = compare(variable_and_status, df_1, df_2)
+                    height_values = np.array(prct_tuple)*100
+
+                    ax[row][col].set_title(title[ctr], fontsize=50)
+                #     ax1.set_ylim(0,100) #Uncomment to scale axis to 100
+                    ax[row][col].set_ylabel('Percent of Population')
+                    ax[row][col].set_xlabel('Populations')
+                    sns.barplot(x=col_names, y=height_values, palette="deep", ax=ax[row][col])
+                #     ax1.bar(x=col_names, height=height_values)
+                #    fig.savefig(variable_and_status[0]+'.png')
+                    ctr+=1
+
 
 def get_SKC_youth_2018(conn):
     query = """
